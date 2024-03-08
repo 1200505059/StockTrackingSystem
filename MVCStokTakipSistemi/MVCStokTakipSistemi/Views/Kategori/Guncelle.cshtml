@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_mainlayout.cshtml";
+}
+@model MVCStokTakipSistemi.Models.Entity.TBLKATEGORI
+<h2>KATEGORİ GÜNCELLEME SAYFASI</h2>
+<hr />
+<form class="form-group" method="post">
+    <div>
+        <label>KATEGORİ ID</label>
+        <input type="text" class="form-control"  value="@Model.KATEGORIID" disabled />
+        <input type="hidden" class="form-control" name="KATEGORIID" value="@Model.KATEGORIID"  />
+        <label>KATEGORİ ADI</label>
+        <input type="text" class="form-control" name="KATEGORIAD" value="@Model.KATEGORIAD" />
+
+    </div>
+    <br />
+    <div><button class="btn btn-info">GÜNCELLE</button></div>
+
+</form>
+<br />
+<br />
+

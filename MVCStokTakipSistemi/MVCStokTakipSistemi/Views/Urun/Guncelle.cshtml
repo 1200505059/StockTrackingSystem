@@ -1,0 +1,37 @@
+﻿@model MVCStokTakipSistemi.Models.Entity.TBLURUN
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_mainlayout.cshtml";
+}
+<h2>ÜRÜN EKLEME SAYFASI</h2>
+<hr />
+<form class="form-group" method="post">
+    <div>
+        
+        <input type="hidden" class="form-control" name="URUNID" value="@Model.URUNID"  />
+        <br />
+        <label>ÜRÜN AD</label>
+        <input type="text" class="form-control" name="URUNAD" value="@Model.URUNAD"/>
+        <br />
+        <label>ÜRÜN MARKA</label>
+        <input type="text" class="form-control" name="URUNMARKA" value="@Model.URUNMARKA"/>
+        <br />
+        <label>ÜRÜN KATEGORİ</label>
+        <input type="text" class="form-control" name="URUKATEGORİ" value="@Model.URUKATEGORİ" />
+        <br />
+        <label>ÜRÜN FİYAT</label>
+        <input type="text" class="form-control" name="FİYAT" value="@Model.FİYAT"/>
+        <br />
+        <label>ÜRÜN STOK</label>
+        <input type="text" class="form-control" name="STOK" value="@Model.STOK"/>
+        <br />
+    </div>
+    <br />
+    <button class="btn btn-warning">GÜNCELLE</button>
+
+</form>
+<br />
+<br />
+
+
+

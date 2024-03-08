@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBMVCSTOKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TBLKATEGORI">
+    <Key>
+      <PropertyRef Name="KATEGORIID" />
+    </Key>
+    <Property Name="KATEGORIID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KATEGORIAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TBLURUN" Relationship="Self.FK_TBLURUN_TBLKATEGORI" FromRole="TBLKATEGORI" ToRole="TBLURUN" />
+  </EntityType>
+  <EntityType Name="TBLMUSTERI">
+    <Key>
+      <PropertyRef Name="MUSTERIID" />
+    </Key>
+    <Property Name="MUSTERIID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MUSTERIAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MUSTERISOYAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TBLSATIŞ" Relationship="Self.FK_TBLSATIŞ_TBLMUSTERI" FromRole="TBLMUSTERI" ToRole="TBLSATIŞ" />
+  </EntityType>
+  <EntityType Name="TBLSATIŞ">
+    <Key>
+      <PropertyRef Name="SATIŞID" />
+    </Key>
+    <Property Name="SATIŞID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URUN" Type="Int32" />
+    <Property Name="MUSTERI" Type="Int32" />
+    <Property Name="ADET" Type="Int32" />
+    <Property Name="FİYAT" Type="Int32" />
+    <NavigationProperty Name="TBLMUSTERI" Relationship="Self.FK_TBLSATIŞ_TBLMUSTERI" FromRole="TBLSATIŞ" ToRole="TBLMUSTERI" />
+    <NavigationProperty Name="TBLURUN" Relationship="Self.FK_TBLSATIŞ_TBLURUN" FromRole="TBLSATIŞ" ToRole="TBLURUN" />
+  </EntityType>
+  <EntityType Name="TBLURUN">
+    <Key>
+      <PropertyRef Name="URUNID" />
+    </Key>
+    <Property Name="URUNID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="URUNAD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URUKATEGORİ" Type="Int16" />
+    <Property Name="FİYAT" Type="Int32" />
+    <Property Name="URUNMARKA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="STOK" Type="Int32" />
+    <NavigationProperty Name="TBLKATEGORI" Relationship="Self.FK_TBLURUN_TBLKATEGORI" FromRole="TBLURUN" ToRole="TBLKATEGORI" />
+    <NavigationProperty Name="TBLSATIŞ" Relationship="Self.FK_TBLSATIŞ_TBLURUN" FromRole="TBLURUN" ToRole="TBLSATIŞ" />
+  </EntityType>
+  <Association Name="FK_TBLURUN_TBLKATEGORI">
+    <End Role="TBLKATEGORI" Type="Self.TBLKATEGORI" Multiplicity="0..1" />
+    <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBLKATEGORI">
+        <PropertyRef Name="KATEGORIID" />
+      </Principal>
+      <Dependent Role="TBLURUN">
+        <PropertyRef Name="URUKATEGORİ" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBLSATIŞ_TBLMUSTERI">
+    <End Role="TBLMUSTERI" Type="Self.TBLMUSTERI" Multiplicity="0..1" />
+    <End Role="TBLSATIŞ" Type="Self.TBLSATIŞ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBLMUSTERI">
+        <PropertyRef Name="MUSTERIID" />
+      </Principal>
+      <Dependent Role="TBLSATIŞ">
+        <PropertyRef Name="MUSTERI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TBLSATIŞ_TBLURUN">
+    <End Role="TBLURUN" Type="Self.TBLURUN" Multiplicity="0..1" />
+    <End Role="TBLSATIŞ" Type="Self.TBLSATIŞ" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TBLURUN">
+        <PropertyRef Name="URUNID" />
+      </Principal>
+      <Dependent Role="TBLSATIŞ">
+        <PropertyRef Name="URUN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBMVCSTOKEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="TBLKATEGORI" EntityType="Self.TBLKATEGORI" />
+    <EntitySet Name="TBLMUSTERI" EntityType="Self.TBLMUSTERI" />
+    <EntitySet Name="TBLSATIŞ" EntityType="Self.TBLSATIŞ" />
+    <EntitySet Name="TBLURUN" EntityType="Self.TBLURUN" />
+    <AssociationSet Name="FK_TBLURUN_TBLKATEGORI" Association="Self.FK_TBLURUN_TBLKATEGORI">
+      <End Role="TBLKATEGORI" EntitySet="TBLKATEGORI" />
+      <End Role="TBLURUN" EntitySet="TBLURUN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBLSATIŞ_TBLMUSTERI" Association="Self.FK_TBLSATIŞ_TBLMUSTERI">
+      <End Role="TBLMUSTERI" EntitySet="TBLMUSTERI" />
+      <End Role="TBLSATIŞ" EntitySet="TBLSATIŞ" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TBLSATIŞ_TBLURUN" Association="Self.FK_TBLSATIŞ_TBLURUN">
+      <End Role="TBLURUN" EntitySet="TBLURUN" />
+      <End Role="TBLSATIŞ" EntitySet="TBLSATIŞ" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
